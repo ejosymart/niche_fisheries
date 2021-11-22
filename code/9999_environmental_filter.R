@@ -5,7 +5,9 @@ library (maps)
 library (testthat)
 library (roxygen2)
 
-#' resample the raw data to eliminate the biases in the environmental space. 
+#' BASED ON VARELA
+#'
+#' Resample the raw data to eliminate the biases in the environmental space. 
 #' 
 #' Ecological Niche Model's predictions could be improved by using unbiased data sets 
 #' for calibrating the algorithms. 
@@ -107,17 +109,3 @@ envSample<- function (coord, filters, res, do.plot=TRUE){
   }
   coord_filter
 }
-
-
-file <- paste(system.file(package="dismo"), "/ex/bradypus.csv", sep="")
-bradypus <- read.table(file, header=TRUE, sep=',')
-coord<- bradypus[,2:3]
-setwd("../../../Disco local/COUSTEAU_Consultant_Group/cursos/Modelos_Distribucion_Especies_I/data/envirData/worldclim/wc2-5/")
-var <- list.files(pattern=".bil")
-wc <- stack(var)
-data <- extract(wc, coord)
-data <- as.data.frame(data)
-x <- envSample(coord, 
-               filters = list(data$bio1, data$bio12), 
-               res     = list(20, 200), 
-               do.plot = TRUE)
